@@ -1,7 +1,7 @@
 from Base_Model import BaseModel
 
 class Review(BaseModel):
-    def __init__(self, text, rating, place, user):
+    def __init__(self, text, rating, place=None, user=None):
         super().__init__()
         if not text:
             raise ValueError("Invalide 'text': review content must not be empty")
@@ -20,6 +20,10 @@ class Review(BaseModel):
         self.rating = rating
         self.place = place
         self.user = user
+
+        place.add_review(self)
+        if hasattr(user, "add_review"):
+            user.add_review(self)
 
     def __str__(self):
         return f"Review({self.id}, {self.rating}, {self.text})"

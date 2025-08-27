@@ -9,6 +9,19 @@ class User(BaseModel):
         self.email = email
         self.is_admin = is_admin
         self.validate_email()
+        self.places = []
+        self.reviews = []
+
+    def add_place(self, place):
+        """Assign a place to this user"""
+        if place not in self.places:
+            self.places.append(place)
+            place.owner = self
+
+    def add_review(self, review):
+        if review not in self.reviews:
+            self.reviews.append(review)
+            review.user = self
 
     def validate_email(self):
         """Validate email"""
