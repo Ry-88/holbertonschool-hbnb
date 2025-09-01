@@ -1,7 +1,7 @@
 import unittest
 import uuid
 from datetime import datetime
-from app.models.base_model import BaseModel
+from app.models.Base_Model import BaseModel
 import time
 
 
