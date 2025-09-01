@@ -13,7 +13,6 @@ class HBnBFacade:
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
 
-    # --- Opérations sur les utilisateurs ---
     def create_user(self, user_data):
         user = User(**user_data)
         self.user_repo.add(user)
@@ -25,7 +24,6 @@ class HBnBFacade:
     def get_user_by_email(self, email):
         return self.user_repo.get_by_attribute('email', email)
 
-    # --- Opérations sur les lieux ---
     def create_place(self, place_data):
         if place_data["price"] < 0:
             raise ValueError("Price must be a non-negative value.")
@@ -90,7 +88,6 @@ class HBnBFacade:
         self.place_repo.add(place)
         return place
 
-    # --- Opérations sur les avis (reviews) ---
     
     def create_review(self, review_data):
         required = ["text", "rating", "user_id", "place_id"]

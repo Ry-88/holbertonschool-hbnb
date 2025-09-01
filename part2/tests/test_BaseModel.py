@@ -8,7 +8,6 @@ import time
 class TestBaseModel(unittest.TestCase):
 
     def test_instance_creation(self):
-        """Test the creation of a BaseModel instance."""
         obj = BaseModel()
         self.assertIsInstance(obj, BaseModel)
         self.assertIsInstance(obj.id, str)
@@ -17,13 +16,11 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(obj.updated_at, datetime)
 
     def test_unique_id(self):
-        """Verifies that each instance has a unique ID."""
         obj1 = BaseModel()
         obj2 = BaseModel()
         self.assertNotEqual(obj1.id, obj2.id)
 
     def test_save_updates_timestamp(self):
-        """Check that `save()` updates `updated_at`."""
         obj = BaseModel()
         old_updated_at = obj.updated_at
         time.sleep(1)  # Pause to ensure timestamp change
@@ -31,7 +28,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertGreater(obj.updated_at, old_updated_at)
 
     def test_update_method(self):
-        """Tests the update() method to modify attributes."""
         obj = BaseModel()
         old_updated_at = obj.updated_at
         obj.update(
