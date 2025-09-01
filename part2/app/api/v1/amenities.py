@@ -1,54 +1,43 @@
-from flask import request
 from flask_restx import Namespace, Resource, fields
-from ..services import amenities as svc
+from app.services import facade
 
-ns = Namespace("amenities", description="Amenity management")
+api = Namespace('amenities', description='Amenity operations')
 
-amenity_out = ns.model("Amenity", {
-    "id": fields.String,
-    "name": fields.String,
-    "description": fields.String,
-    "created_at": fields.String,
-    "updated_at": fields.String,
+# Define the amenity model for input validation and documentation
+amenity_model = api.model('Amenity', {
+    'name': fields.String(required=True, description='Name of the amenity')
 })
 
-amenity_in = ns.model("AmenityCreate", {
-    "name": fields.String(required=True),
-    "description": fields.String,
-})
-
-amenity_upd = ns.model("AmenityUpdate", {
-    "name": fields.String,
-    "description": fields.String,
-})
-
-@ns.route("/")
+@api.route('/')
 class AmenityList(Resource):
-    @ns.marshal_list_with(amenity_out, code=200, description="List of amenities")
-    def get(self):
-        body, status = svc.list_amenities()
-        return body, status
-
-    @ns.expect(amenity_in, validate=True)
-    @ns.marshal_with(amenity_out, code=201, description="Amenity created")
+    @api.expect(amenity_model)
+    @api.response(201, 'Amenity successfully created')
+    @api.response(400, 'Invalid input data')
     def post(self):
-        data = request.get_json() or {}
-        body, status = svc.create_amenity(data)
-        return body, status
+        """Register a new amenity"""
+        # Placeholder for the logic to register a new amenity
+        pass
 
-@ns.route("/<string:amenity_id>")
-@ns.param("amenity_id", "Amenity identifier")
-class AmenityItem(Resource):
-    @ns.marshal_with(amenity_out, code=200, description="Amenity by id")
+    @api.response(200, 'List of amenities retrieved successfully')
+    def get(self):
+        """Retrieve a list of all amenities"""
+        # Placeholder for logic to return a list of all amenities
+        pass
+
+@api.route('/<amenity_id>')
+class AmenityResource(Resource):
+    @api.response(200, 'Amenity details retrieved successfully')
+    @api.response(404, 'Amenity not found')
     def get(self, amenity_id):
-        body, status = svc.get_amenity(amenity_id)
-        return body, status
+        """Get amenity details by ID"""
+        # Placeholder for the logic to retrieve an amenity by ID
+        pass
 
-    @ns.expect(amenity_upd, validate=True)
-    @ns.marshal_with(amenity_out, code=200, description="Amenity updated")
+    @api.expect(amenity_model)
+    @api.response(200, 'Amenity updated successfully')
+    @api.response(404, 'Amenity not found')
+    @api.response(400, 'Invalid input data')
     def put(self, amenity_id):
-        data = request.get_json() or {}
-        if not any(k in data for k in ("name", "description")):
-            return {"error": "No updatable fields provided"}, 400
-        body, status = svc.update_amenity(amenity_id, data)
-        return body, status
+        """Update an amenity's information"""
+        # Placeholder for the logic to update an amenity by ID
+        pass

@@ -51,9 +51,7 @@ class UserResource(Resource):
         if not user:
             return {'error': 'User not found'}, 404
         return {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}, 200
-
-@api.route('/<int:user_id>')
-class UserUpdate(Resource):
+    
     @api.expect(user_model, validate=True)
     @api.response(200, 'User successfully updated')
     @api.response(404, 'User not found')
@@ -62,8 +60,8 @@ class UserUpdate(Resource):
         """Update an existing user"""
         user_data = api.payload
 
-        # validate
-        existing_user = facade.get_user_by_id(user_id)
+        # validate  
+        existing_user = facade.get_user(user_id)
         if not existing_user:
             return {'error': 'User not found'}, 404
 
@@ -75,7 +73,9 @@ class UserUpdate(Resource):
             'first_name': updated_user.first_name,
             'last_name': updated_user.last_name,
             'email': updated_user.email
-        }, 200
+        }, 200  
+
+    
 
 
 
