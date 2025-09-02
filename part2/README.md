@@ -66,7 +66,7 @@ hbnb/
 
 ## ⚙️ Installation & Running
 
-1. **Clone the repository:**
+
 ```bash
 git clone https://github.com/Ry-88/holbertonschool-hbnb.git
 cd holbertonschool-hbnb/part2
@@ -78,7 +78,7 @@ venv\Scripts\activate      # Windows
 pip install -r requirements.txt
 
 python3 run.py
-
+```
 
 ## Authors
 
