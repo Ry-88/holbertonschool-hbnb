@@ -19,6 +19,7 @@ providing a structured way to interact with the application data.
 ---
 
 ## 📂 Project Structure
+```text
 hbnb/
 ├── app/
 │   ├── __init__.py
@@ -58,7 +59,7 @@ hbnb/
 ├── config.py
 ├── requirements.txt
 ├── README.md
-
+```
 
 
 ---
