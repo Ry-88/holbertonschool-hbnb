@@ -1,6 +1,7 @@
 # app/services/facade.py
 
 from app.persistence.repository import InMemoryRepository
+from app import bcrypt
 from app.models.user import User
 from app.models.amenity import Amenity
 from app.models.place import Place
@@ -14,7 +15,14 @@ class HBnBFacade:
         self.amenity_repo = InMemoryRepository()
 
     def create_user(self, user_data):
-        user = User(**user_data)
+        # Create user with only allowed fields
+        user = User(
+            first_name=user_data["first_name"],
+            last_name=user_data["last_name"],
+            email=user_data["email"],
+        )
+        # Hash and set the password
+        user.hash_password(user_data["password"])
         self.user_repo.add(user)
         return user
 

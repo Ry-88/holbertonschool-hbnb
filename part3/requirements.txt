@@ -1,3 +1,4 @@
 flask
 flask-restx
-pip install -U Flask-SQLAlchemy
+Flask-SQLAlchemy
+flask-bcrypt
