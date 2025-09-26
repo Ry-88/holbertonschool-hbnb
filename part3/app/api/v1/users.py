@@ -1,6 +1,7 @@
 from flask_restx import Namespace, Resource, fields
+from flask import request
 from app.services import facade
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 
 api = Namespace('users', description='User operations')
 
@@ -18,8 +19,12 @@ class UserList(Resource):
     @api.response(201, 'User successfully created')
     @api.response(400, 'Email already registered')
     @api.response(400, 'Invalid input data')
+    @jwt_required()
     def post(self):
         """Register a new user"""
+        claims = get_jwt()
+        if not claims.get("is_admin"):
+             api.abort(403, "Admin privileges required")
         user_data = api.payload
 
         # Simulate email uniqueness check (to be replaced by real validation with persistence)
@@ -71,12 +76,22 @@ class UserResource(Resource):
         # validate  
         existing_user = facade.get_user(user_id)
         if not current_user.get('is_admin'):
-            if user_data['email'] != existing_user.email or existing_user.verify_password(user_data['password']):
-                return {'error': 'You cannot modify email or password'}
+            return {'error': 'Admin privileges required'}, 403
+        if user_data['email'] != existing_user.email or existing_user.verify_password(user_data['password']):
+                return {'error': 'You cannot modify email or password'}, 403
         if not current_user.get('is_admin') and user_id != current_user['id']:
             return {'error': 'Unauthorized action'}, 403
         if not existing_user:
             return {'error': 'User not found'}, 404
+        
+        data = request.json
+        email = data.get('email')
+
+        # Ensure email uniqueness
+        if email:
+            existing_user = facade.get_user_by_email(email)
+            if existing_user and existing_user.id != user_id:
+                return {'error': 'Email already in use'}, 400
 
         # update
         updated_user = facade.update_user(user_id, user_data)
