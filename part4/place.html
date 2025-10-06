@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HBnB - Place Details</title>
+  <link rel="icon" href="icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Place details on HBnB">
+</head>
+<body>
+  <header>
+    <div class="container header-row">
+      <a href="index.html" aria-label="Home">
+        <img src="logo.png" alt="HBnB" class="logo">
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="login.html" class="login-button">Login</a>
+      </nav>
+      <span class="spacer"></span>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section id="place-details" class="place-details" aria-live="polite"></section>
+
+      <section id="add-review" class="add-review form" aria-labelledby="add-review-title" style="display:none">
+        <h2 id="add-review-title">Add a review</h2>
+        <p class="muted">You must be logged in to add a review.</p>
+        <a class="details-button" id="add-review-link">Go to Add Review</a>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <small>All rights reserved.</small>
+    </div>
+  </footer>
+  <script src="scripts.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const url = new URL(window.location.href);
+      const placeId = url.searchParams.get('id');
+      const link = document.getElementById('add-review-link');
+      if (link && placeId) link.href = `add_review.html?id=${encodeURIComponent(placeId)}`;
+    });
+  </script>
+</body>
+</html>
+
+
