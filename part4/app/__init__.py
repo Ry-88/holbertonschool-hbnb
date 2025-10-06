@@ -1,15 +1,16 @@
 from flask import Flask
 from flask_restx import Api
-from app.extensions import bcrypt, jwt
+from app.extensions import bcrypt
 import config
 from app.api.v1.users import api as users_ns
+from app.api.v1.auth import api as auth_ns
 from app.api.v1.places import api as places_ns
 from app.api.v1.amenities import api as amenities_ns
 from app.api.v1.reviews import api as reviews_ns
-from app.api.v1.auth import api as auth_ns
+from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
-from flask import render_template
 
+jwt = JWTManager()
 db = SQLAlchemy()
 
 
@@ -26,18 +27,10 @@ def create_app(config_class=config.DevelopmentConfig):
 
     # Register the users namespace
     api.add_namespace(users_ns, path='/api/v1/users')
+    api.add_namespace(auth_ns, path='/api/v1/auth')
     api.add_namespace(places_ns, path='/api/v1/places')
     api.add_namespace(amenities_ns, path='/api/v1/amenities')
     api.add_namespace(reviews_ns, path='/api/v1/review')
-    api.add_namespace(auth_ns, path='/api/v1/auth')
 
-    # Minimal frontend routes for login flow
-    @app.route('/')
-    def home():
-        return render_template('index.html')
-
-    @app.route('/login')
-    def login_page():
-        return render_template('login.html')
 
     return app

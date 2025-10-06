@@ -1,9 +1,3 @@
-from .auth import api as auth
-from .users import api as users
-from .places import api as places
-from .amenities import api as amenities
-from .reviews import api as reviews
-
 # from .ping import ns as health_ns
 # from .users import ns as users_ns            
 # from .amenities import ns as amenities_ns    
