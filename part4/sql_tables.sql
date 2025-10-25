@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS place_amenity (
 );
 
 INSERT INTO users (id, first_name, last_name, email, password, is_admin)
-VALUES ('36c9050e-ddd3-4c3b-9731-9f487208bbc1', 'Admin', 'HBnB', 'admin@hbnb.io', '$2a$12$KJpXZLhI9bB4DYoVfUJdujq/Vit6cm/DyZfC9g5W7lqAAyqWeFYie', TRUE);
+VALUES ('36c9050e-ddd3-4c3b-9731-9f487208bbc1', 'Admin', 'HBnB', 'admin@hbnb.io', '112233', TRUE);
 
 INSERT INTO amenities (id, name)
 VALUES

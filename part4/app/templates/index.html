@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBNB - Explore Places</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+        <nav class="navigation">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('login') }}">Sign In</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="filter-section">
+            <label for="price">Filter by Price:</label>
+            <select id="price">
+                <option value="all">All</option>
+                <option value="10">Under $10</option>
+                <option value="20">Under $20</option>
+                <option value="50">Under $50</option>
+                <option value="100">Under $100</option>
+                <option value="200">Under $200</option>
+            </select>
+        </section>
+
+        <section id="places-list" class="places-container">
+            <!-- Cards will be generated here -->
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 HBNB. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Sample data
+        const places = [
+            {
+                name: "Cozy Studio Apartment",
+                location: "New York, NY",
+                price: 45,
+                image: "{{ url_for('static', filename='images/place1.jpg') }}"
+            },
+            {
+                name: "Beachfront Villa",
+                location: "Miami, FL",
+                price: 120,
+                image: "{{ url_for('static', filename='images/place2.jpg') }}"
+            },
+            {
+                name: "Mountain Cabin",
+                location: "Aspen, CO",
+                price: 80,
+                image: "{{ url_for('static', filename='images/place3.jpg') }}"
+            },
+            {
+                name: "Modern Loft",
+                location: "Los Angeles, CA",
+                price: 65,
+                image: "{{ url_for('static', filename='images/place4.jpg') }}"
+            }
+        ];
+
+        const placesList = document.getElementById("places-list");
+        const priceFilter = document.getElementById("price");
+
+        function renderPlaces(filterPrice = "all") {
+            placesList.innerHTML = "";
+
+            const filtered = filterPrice === "all"
+                ? places
+                : places.filter(p => p.price <= parseInt(filterPrice));
+
+            filtered.forEach(place => {
+                const card = document.createElement("div");
+                card.classList.add("card");
+
+                card.innerHTML = `
+                    <img src="${place.image}" alt="${place.name}" style="width:100%; border-radius: var(--border-radius); margin-bottom: var(--spacing);">
+                    <h3>${place.name}</h3>
+                    <p class="text-muted">${place.location}</p>
+                    <p><strong>$${place.price}</strong> per night</p>
+                `;
+
+                placesList.appendChild(card);
+            });
+        }
+
+        // Initial render
+        renderPlaces();
+
+        // Filter by price
+        priceFilter.addEventListener("change", (e) => {
+            renderPlaces(e.target.value);
+        });
+    </script>
+</body>
+
+</html>

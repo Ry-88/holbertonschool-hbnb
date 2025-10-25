@@ -11,7 +11,7 @@ class User(BaseModel):
     password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
-     # --- RELATIONS ---
+    # --- RELATIONS ---
     places = db.relationship(
         "Place",
         backref="owner",
@@ -27,11 +27,12 @@ class User(BaseModel):
 
     def __init__(self, first_name, last_name, email, password, is_admin=False):
         if not first_name or len(first_name) > 50:
-            raise ValueError("Le prénom est requis et doit faire max 50 caractères")
+            raise ValueError("First name is required and must be at most 50 characters")
         if not last_name or len(last_name) > 50:
-            raise ValueError("Le nom est requis et doit faire max 50 caractères")
+            raise ValueError("Last name is required and must be at most 50 characters")
         if not email or "@" not in email:
-            raise ValueError("Email invalide")
+            raise ValueError("Invalid email")
+        
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -53,14 +54,15 @@ class User(BaseModel):
     #         place.owner = self
 
     # def add_review(self, review):
+    #     """Assign a review to this user"""
     #     if review not in self.reviews:
     #         self.reviews.append(review)
     #         review.user = self
 
     def validate_email(self):
-        """Validate email"""
+        """Validate email format"""
         if not re.match(r"[^@]+@[^@]+\.[^@]+", self.email):
-            raise ValueError("Email non valide")
+            raise ValueError("Invalid email")
     
     def __str__(self):
         return f"User({self.id}, {self.first_name} {self.last_name}, {self.email})"

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBNB - Place Info</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+        <nav class="navigation">
+            <a href="index.html">Home</a>
+            <a href="login.html">Sign In</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="place-info">
+            <!-- Dynamic place details will load here -->
+        </section>
+        <section class="reviews-section">
+            <h2>Guest Reviews</h2>
+            <!-- Dynamic reviews will load here -->
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 HBNB. All rights reserved.</p>
+    </footer>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
